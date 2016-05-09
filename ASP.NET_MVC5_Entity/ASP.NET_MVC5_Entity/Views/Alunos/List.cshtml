@@ -1,56 +1,157 @@
 ﻿@{
-	ViewBag.Title = "AlunosCall";
+	ViewBag.Title = "Lista";
 }
 
-<h2>Alunos Cadastrados</h2>
 
-@using (Html.BeginForm())
-{
+<h3>Resultados Via WEB API:</h3>
 
-	<button id="btnGetAlunos">Listar Alunos</button>
-	<br />
-	<div id="Message"></div>
+	<div class="featured">
+		<div class="content-wrapper">
+			@*<hgroup class="title">
+				<h2>@ViewBag.Title</h2>
+				</hgroup>*@
+			<div>
+				<table class="table">
+					<tr>
 
-	@section Scripts {
-		<script type="text/javascript">
+						<td><button onclick="GetAll();return false;">Lista de Alunos</button></td>
+			
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 
-			$(function () {
-				$('#btnGetAlunos').on("click", function () {
-					$.ajax({
-						type: "GET",
-						url: 'http://localhost:28300/api/Alunos',
-						datatype: 'json',
-						cache: false,
-					})
-					.success(function (data) {
-						var outPut = "";
-						for (var i = 0; i < data.length; i++) {
-							outPut += "<hr/>";
-							outPut += "<b>Aluno ID : <b/>" + data[i].Id + "<br />";
-							outPut += "<b>Nome : <b/>" + data[i].Nome + "<br />";
-							outPut += "<b>Data de Nascimento : <b/>" + data[i].DtNascimento + "<br />";
-						}
-						$('#Message').html(outPut);
-					})
-					.error(function (xhr, ajaxOptions, thronwError) {
-						$('#Message').html("Erro!");
-					});
-					return false;
-				});
 
-				$(document).ajaxStart(function () {
-					$('#loading').show();
-				});
-				$(document).ajaxStop(function () {
-					$('#loading').hide();
-				});
+<div id="divResult"></div>
 
-			})
+
+@section Scripts {
+
+@Scripts.Render("~/bundles/jqueryval")
+
+	<script>
+		function GetAll() {
+			jQuery.support.cors = true;
+			$.ajax({
+				url: 'http://localhost:28300/api/alunos/Get',
+				type: 'GET',
+				dataType: 'json',
+				success: function (data) {
+					OutputData(data);
+				},
+				error: function (x, y, z) {
+					alert(x + '\n' + y + '\n' + z);
+				}
+			});
+		}
+
+		//function GetSingle() {
+		//	jQuery.support.cors = true;
+		//	var id = $('#txtEmpid').val();
+		//	$.ajax({
+		//		url: 'http://localhost:28300/api/alunos/Get' + id,
+		//		type: 'GET',
+		//		dataType: 'json',
+		//		success: function (data) {
+		//			Details(data);
+		//		},
+		//		error: function (x, y, z) {
+		//			alert(x + '\n' + y + '\n' + z);
+		//		}
+		//	});
+		//}
+
+		function Add() {
+			jQuery.support.cors = true;
+			var aluno = {
+				ID: $('#txtaddEmpid').val(),
+				EmpName: $('#txtaddEmpName').val(),
+				EmpDepartment: $('#txtaddEmpDep').val(),
+				EmpMobile: $('#txtaddEmpMob').val()
+			};
+
+			$.ajax({
+				url: 'http://localhost:28300/api/alunos/Add',
+				type: 'POST',
+				data: JSON.stringify(aluno),
+				contentType: "application/json;charset=utf-8",
+				success: function (data) {
+					WriteResponse(data);
+				},
+				error: function (x, y, z) {
+					alert(x + '\n' + y + '\n' + z);
+				}
+			});
+		}
+
+		function Delete() {
+			jQuery.support.cors = true;
+			var id = $('#txtdelEmpId').val()
+
+			$.ajax({
+				url: 'http://localhost:28300/api/alunos/Delete' + id,
+				type: 'DELETE',
+				contentType: "application/json;charset=utf-8",
+				success: function (data) {
+					WriteResponse(data);
+				},
+				error: function (x, y, z) {
+					alert(x + '\n' + y + '\n' + z);
+				}
+			});
+		}
+
+		function Update() {
+			jQuery.support.cors = true;
+			var id = $('#txtdelEmpId').val()
+
+			$.ajax({
+				url: 'http://localhost:28300/api/alunos/Update' + id,
+				type: 'PUT',
+				contentType: "application/json;charset=utf-8",
+				success: function (data) {
+					WriteResponse(data);
+				},
+				error: function (x, y, z) {
+					alert(x + '\n' + y + '\n' + z);
+				}
+			});
+		}
+
+		function WriteResponse(alunos) {
+			var strResult = "<table><th>ID</th><th>Nome</th><th>Data de Nascimento</th><th>Idade</th>";
+			$.each(alunos, function (index, aluno) {
+				strResult += "<tr><td>" + aluno.Id + "</td><td> " + aluno.Nome + "</td><td>" + aluno.DtNascimento + "</td><td>" + aluno.Idade + "</td></tr>";
+			});
+			strResult += "</table>";
+			$("#divResult").html(strResult);
+		}
+
+		function OutputData(data)
+		{
+				var outPut = "";
+				for (var i = 0; i < data.length; i++) {
+					outPut += "<hr/>";
+					outPut += "<b>Aluno ID : <b/>" + data[i].Id + "<br />";
+					outPut += "<b>Nome : <b/>" + data[i].Nome + "<br />";
+					outPut += "<b>Data de Nascimento : <b/>" + data[i].DtNascimento + "<br />";
+				}
+				$('#divResult').html(outPut);
+		};
+			
+		function Details(aluno) {
+			if (aluno != null) {
+				var strResult = "<table><th>EmpID</th><th>Emp Name</th><th>Emp Department</th><th>Mobile No</th>";
+				strResult += "<tr><td>" + aluno.ID + "</td><td> " + aluno.EmpName + "</td><td>" + aluno.EmpDepartment + "</td><td>" + aluno.EmpMobile + "</td></tr>";
+				strResult += "</table>";
+				$("#divResult").html(strResult);
+			}
+			else {
+				$("#divResult").html("Nenhum dado retornado");
+			}
+		}
 
 </script>
-
-}
-
-}
-
-<div id="loading"><img src="~/Content/Images/loader.gif" /> </div>
+			
+	}

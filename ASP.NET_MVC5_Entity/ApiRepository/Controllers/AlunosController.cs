@@ -10,15 +10,16 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using ApiRepository.DataAccess.Models;
 using ApiRepository.DataAccess.ServiceLayer;
+using System.Web.Http.Cors;
 
 namespace ApiRepository.Controllers
 {
+		[EnableCors(origins: "http://localhost:27919", headers: "*", methods: "*")]
 	public class AlunosController : ApiController
 	{
 		private IService svc = new Service();
 
 		// GET: api/AlunosApi
-		[HttpGet]
 		public IHttpActionResult Get()
 		{
 			var alunos = svc.Alunos.All();
@@ -26,22 +27,23 @@ namespace ApiRepository.Controllers
 		}
 
 		// GET: api/AlunosApi/5
-		[ResponseType(typeof(Aluno))]
-		public IHttpActionResult Get(int id)
-		{
-			Aluno aluno = svc.Alunos.GetById(id);
-			if (aluno == null)
-			{
-				return NotFound();
-			}
+		//[ResponseType(typeof(Aluno))]
+		//public IHttpActionResult Get(int id)
+		//{
+		//	Aluno aluno = svc.Alunos.GetById(id);
+		//	if (aluno == null)
+		//	{
+		//		return NotFound();
+		//	}
 
-			return Ok(aluno);
+		//	return Ok(aluno);
 			
-		}
+		//}
 
 		// PUT: api/AlunosApi/5
+		[HttpPut]
 		[ResponseType(typeof(void))]
-		public IHttpActionResult Put(int id, Aluno aluno)
+		public IHttpActionResult Update(int id, Aluno aluno)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -75,8 +77,9 @@ namespace ApiRepository.Controllers
 		}
 
 		// POST: api/AlunosApi
+		[HttpPost]
 		[ResponseType(typeof(Aluno))]
-		public IHttpActionResult Post(Aluno aluno)
+		public IHttpActionResult Add(Aluno aluno)
 		{
 			if (!ModelState.IsValid)
 			{
