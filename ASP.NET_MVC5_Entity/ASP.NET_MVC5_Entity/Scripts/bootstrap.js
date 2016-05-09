@@ -861,7 +861,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
 +function ($) { "use strict";
 
-  // MODAL CLASS DEFINITION
+  // MODataAccess CLASS DEFINITION
   // ======================
 
   var Modal = function (element, options) {
@@ -1033,7 +1033,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   }
 
 
-  // MODAL PLUGIN DEFINITION
+  // MODataAccess PLUGIN DEFINITION
   // =======================
 
   var old = $.fn.modal
@@ -1053,7 +1053,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   $.fn.modal.Constructor = Modal
 
 
-  // MODAL NO CONFLICT
+  // MODataAccess NO CONFLICT
   // =================
 
   $.fn.modal.noConflict = function () {
@@ -1062,7 +1062,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   }
 
 
-  // MODAL DATA-API
+  // MODataAccess DATA-API
   // ==============
 
   $(document).on('click.bs.modal.data-api', '[data-toggle="modal"]', function (e) {

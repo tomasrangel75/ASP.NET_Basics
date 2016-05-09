@@ -12,9 +12,9 @@
 			<th>
 				@Html.DisplayNameFor(model => model.aluno.DtNascimento)
 			</th>
-			@*<th>
+			<th>
 				@Html.DisplayNameFor(model => model.aluno.Idade)
-			</th>*@
+			</th>
 			<th></th>
 
 		</tr>
@@ -28,9 +28,9 @@
 				<td>
 					@Html.DisplayFor(modelItem => item.DtNascimento)
 				</td>
-				@*<td>
+				<td>
 					@Html.DisplayFor(modelItem => item.Idade)
-				</td>*@
+				</td>
 				<td>
 					@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
 					@Html.ActionLink("Details", "Details", new { id = item.Id }) |

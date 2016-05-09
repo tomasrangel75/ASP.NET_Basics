@@ -1,5 +1,5 @@
-﻿using ASP.NET_MVC5_Entity.DAL.UnitOfWork;
-using ASP.NET_MVC5_Entity.Models;
+﻿using ASP.NET_MVC5_Entity.DataAccess.UnitOfWork;
+using ASP.NET_MVC5_Entity.DataAccess.Models;
 using ASP.NET_MVC5_Entity.ViewModels;
 using System;
 using System.Collections.Generic;
