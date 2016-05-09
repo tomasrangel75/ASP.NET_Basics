@@ -1,0 +1,56 @@
+﻿@model ASP.NET_MVC5_Entity.ViewModels.AlunosVM
+
+@{
+	ViewBag.Title = "Cadastrar";
+}
+
+<h2>Cadastro de Alunos</h2>
+
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="form-horizontal">
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		<div class="form-group">
+			@Html.LabelFor(model => model.aluno.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.aluno.Nome, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.aluno.Nome, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.aluno.DtNascimento, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.aluno.DtNascimento, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.aluno.DtNascimento, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Gravar" class="btn btn-default" />
+			</div>
+		</div>
+	</div>
+}
+
+<div id="result" class="col-md-offset-2 col-md-10">
+
+</div>
+
+<br />
+<br />
+
+<div>
+	@Html.Partial("PartialViewAlunos")
+</div>
+
+
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+}

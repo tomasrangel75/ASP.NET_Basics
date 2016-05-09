@@ -1,0 +1,50 @@
+﻿@model ASP.NET_MVC5_Entity.Models.Aluno
+
+@{
+	ViewBag.Title = "Remover";
+}
+
+<h2>Remover Aluno</h2>
+
+<div>
+	<h4>Aluno</h4>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.Nome)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Nome)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.DtNascimento)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.DtNascimento)
+		</dd>
+
+		@*<dt>
+			@Html.DisplayNameFor(model => model.Idade)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Idade)
+		</dd>*@
+
+
+
+	</dl>
+
+	@using (Html.BeginForm())
+	{
+		@Html.AntiForgeryToken()
+
+		<div class="form-actions no-color">
+			<input type="submit" value="Remover" class="btn btn-default" /> |
+			@Html.ActionLink("Retornar à Lista de Alunos", "Create")
+		</div>
+	}
+</div>

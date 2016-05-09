@@ -1,0 +1,55 @@
+﻿@{
+	ViewBag.Title = "ListaAlunos";
+}
+
+<h2>Alunos Cadastrados</h2>
+
+@using (Html.BeginForm())
+{
+
+	<button id="btnGetAlunos">Listar Alunos</button>
+	<br />
+	<div id="Message"></div>
+
+	@section Scripts {
+		<script type="text/javascript">
+
+			var serviceUrl = 'http://localhost:6826/api/Test/Get'
+
+			$(function () {
+				$('#btnGetAlunos').on("click", function () {
+					$.ajax({
+						type: "GET",
+						url: serviceUrl,
+						datatype: 'json',
+						cache: false,
+					})
+					.success(function (data) {
+						var outPut = "";
+						for (var i = 0; i < data.length; i++) {
+							outPut += "<hr/>";
+							outPut += "<b>Aluno ID : <b/>" + data[i].Id + "<br />";
+							outPut += "<b>Nome : <b/>" + data[i].Nome + "<br />";
+							outPut += "<b>Data de Nascimento : <b/>" + data[i].DtNascimento + "<br />";
+						}
+						$('#Message').html(outPut);
+					})
+					.error(function (xhr, ajaxOptions, thronwError) {
+						$('#Message').html("Erro!");
+					});
+					return false;
+				});
+
+				//$(document).ajaxStart(function () {
+				//	$('#loading').show();
+				//});
+				//$(document).ajaxStop(function () {
+				//	$('#loading').hide();
+				//});
+			})
+
+		</script>
+	}
+}
+
+@*<div id="loading"><img src="~/Content/Images/loader.gif" /> </div>*@
